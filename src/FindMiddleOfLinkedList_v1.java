@@ -45,11 +45,9 @@ public class FindMiddleOfLinkedList_v1 {
 		}
 		
 		if(head.getNext() != null){
-			findMiddle(head.getNext(), ++index);
+			return findMiddle(head.getNext(), ++index);
 		}
-		else {
-			return (int) Math.floor((index/2));
-		}
+		return (int) Math.floor((index/2));
 	}
 	
 	static void createDummyLL(Node head, int numNodes, int dataStart){
@@ -92,4 +90,3 @@ class Node {
 		return next;
 	}
 }
-s
