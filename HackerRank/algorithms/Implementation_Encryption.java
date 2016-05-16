@@ -43,6 +43,42 @@ https://www.hackerrank.com/challenges/encryption
 
 package algorithms;
 
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
 public class Implementation_Encryption {
 
+	public static void main(String[] args) {
+	    Scanner in = new Scanner(System.in);
+	    String message = in.next();
+	    
+	    int L = message.length();
+	    char[][] encryptedGrid = 
+	    		new char[(int)Math.floor(Math.sqrt(L))][(int)Math.ceil(Math.sqrt(L))];
+	    
+	    printEncryptedMessage(encryptedGrid);
+	}
+	
+	static void printEncryptedMessage(char[][] encryptedGrid){
+		//no null check, since primitive types cannot be null.
+		
+		printEncryptedRecurse(encryptedGrid, 0, 0);
+	}
+	
+	private static void printEncryptedRecurse(char[][] encryptedGrid, int row, int col){
+		if(col != 0 && row == 0){
+			System.out.println(" ");
+		}
+		System.out.println(encryptedGrid[row][col]);
+		
+		//modify row/col values
+		//extensible, if problem statement changed and rows needed to be different lengths.
+		row = (row++) % encryptedGrid.length;
+		col = (row == 0) ? col++ : col;
+		printEncryptedRecurse(encryptedGrid, row, col);
+	}
+	
 }
