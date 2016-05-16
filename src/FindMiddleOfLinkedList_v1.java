@@ -1,8 +1,6 @@
-
-
 /*
  * PROBLEM: Find the middle of a singly linked list.
- * 
+ * @author	rob.wagner
  */
 public class FindMiddleOfLinkedList_v1 {
 
@@ -15,13 +13,13 @@ public class FindMiddleOfLinkedList_v1 {
 		
 		//expect 1
 		System.out.println(findMiddle(head, 0));
-		
 
 	}
 
 	/*
-	 * Since in this scenario, we dont know length of LL, 
-	 * need to iterate through until end, and divide by 2.
+	 * In this scenario, we don't know the length of the LL. 
+	 * Therefore, we need to iterate through until the end, 
+	 * and divide by 2 (rounding) to get the middle index.
 	 * 
 	 * Could be optimized depending upon estimated average length of LL.
 	 * (e.g. skip by n nodes at a time, when the recursive call hits a null,
@@ -44,9 +42,12 @@ public class FindMiddleOfLinkedList_v1 {
 			return -1;
 		}
 		
+		//recurse through list until getNext is null
 		if(head.getNext() != null){
 			return findMiddle(head.getNext(), ++index);
 		}
+		
+		//return middle
 		return (int) Math.floor((index/2));
 	}
 	
@@ -58,19 +59,21 @@ public class FindMiddleOfLinkedList_v1 {
 		{
 			Node n = new Node(data++);
 			contextList[i%2].setNext(n);
-			contextList[(i%2)+1]=n;
+			contextList[(i%2)+1] = n;
 		}
 	}
 	
 }
 
 class Node {
+	//Node fields
 	private Object data;
 	private Node next;
 	
 	public Node(Object data){
 		this.data = data;
 	}
+	//copy constructor
 	public Node(Node copy){
 		this.data = copy.data;
 		this.next = copy.next;
