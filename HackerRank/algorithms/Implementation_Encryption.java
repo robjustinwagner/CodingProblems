@@ -49,32 +49,40 @@ public class Implementation_Encryption {
 
 	public static void main(String[] args) {
 	    Scanner in = new Scanner(System.in);
-	    String message = in.next();
+	    char[] message = in.next().toCharArray();
+	    in.close();
 	    
-	    int L = message.length();
-	    char[][] encryptedGrid = 
-	    		new char[(int)Math.floor(Math.sqrt(L))][(int)Math.ceil(Math.sqrt(L))];
-	    
-	    printEncryptedMessage(encryptedGrid);
+	    printEncryptedMessage(message);
 	}
 	
-	static void printEncryptedMessage(char[][] encryptedGrid){
+	//careful for stack overflow
+	static void printEncryptedMessage(char[] message){
 		//no null check, since primitive types cannot be null.
 		
-		printEncryptedRecurse(encryptedGrid, 0, 0);
+		printEncryptedRecurse(message, 0, 0);
 	}
 	
-	private static void printEncryptedRecurse(char[][] encryptedGrid, int row, int col){
-		if(col != 0 && row == 0){
-			System.out.println(" ");
-		}
-		System.out.println(encryptedGrid[row][col]);
+	private static void printEncryptedRecurse(char[] message, int row, int col){
+		System.out.print(message[row]);
 		
 		//modify row/col values
+		int mod = (int)Math.ceil(Math.sqrt(message.length));
 		//extensible, if problem statement changed and rows needed to be different lengths.
-		row = (row++) % encryptedGrid.length;
-		col = (row == 0) ? col++ : col;
-		printEncryptedRecurse(encryptedGrid, row, col);
+		if((row+mod) >= message.length){
+			System.out.print(" ");
+			col++;
+			row = col;
+		}
+		else{
+			row = row+mod;
+		}
+		
+		if(col == mod){
+			//we are done
+			return;
+		}
+		//else
+		printEncryptedRecurse(message, row, col);
 	}
 	
 }
