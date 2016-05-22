@@ -68,8 +68,13 @@ public class Search_SherlockAndArray {
 		int T = stdIn.nextInt();	//number of tests
 		for(int testCaseNumber = 1; testCaseNumber <= T; testCaseNumber++){
 			parseArray(testCaseNumber);
-			boolean balanced = isArrayBalanced(testCaseNumber);
-			String message = balanced ? BALANCED : NOT_BALANCED;
+			Integer[] A = testMap.get(testCaseNumber);
+			String message = NOT_BALANCED;
+			// A cannot be null, and must be greater than 1 element in length
+			if( A != null && A.length >= 1)
+			{
+				message = isArrayBalanced(A, 0, A.length-1, A[0], A[A.length-1]);		
+			}
 			System.out.println(message);
 		}
 	}
@@ -86,9 +91,31 @@ public class Search_SherlockAndArray {
 		testMap.put(Integer.valueOf(testCaseNumber), A);
 	}
 	
-	private static boolean isArrayBalanced(int testCaseNumber){
+	/* 
+	 * Two pointers to end indices of array, recurse until difference is two; check if sums are equal.
+	 */
+	private static String isArrayBalanced(Integer[] A, int ptrL, int ptrR, int valL, int valR){
+
+		//array is of length 1, and is considered to always be balanced.
+		if(ptrL == ptrR){
+			return BALANCED;
+		}
 		
-		return true;
+		int difference = ptrR - ptrL;
+		//converged on two parts of array
+		if(difference == 2){
+			return (valL == valR) ? BALANCED : NOT_BALANCED;
+		}
+		//array is of length 2, and can never be balanced
+		else if(difference == 1){
+			return NOT_BALANCED;
+		}
+		//else, we aren't done recursing yet
+		else{
+			return (valL >= valR) ? 
+					isArrayBalanced(A, ptrL, --ptrR, valL, valR+A[--ptrR]) :
+					isArrayBalanced(A, ++ptrL, ptrR, valL+A[++ptrL], valR);
+		}
 	}
 	
 }
