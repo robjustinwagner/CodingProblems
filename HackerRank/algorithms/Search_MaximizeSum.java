@@ -47,6 +47,7 @@ their sums modulo 7 are:
 respectively. 
 Hence maximum possible sum taking Modulo 7 is 6 , and we can get 6 by adding 
 first and second element of the array.
+
  */
 public class Search_MaximizeSum {
 
