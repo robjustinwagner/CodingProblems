@@ -40,3 +40,63 @@ or O(NlogN + MlogM) sort?? --> TODO
   keeping track of min(closestMatch) --> N * O(logN) --> O(NlogN) total time and O(1) space
 - BETTER SOLUTION: two pointers, beginning at index 0 of each array, pretend like you're "merging" them
     --> O(N+M) time
+
+
+    /* concerns: int overflow
+      finds the smallest difference between any pair of int's from each array
+      input:
+      output:
+    */
+    public int smallestDifference(int[] a, int[] b){
+      if(a.length == 0 || b.length == 0){
+        throw InvalidArrayInputException();
+      }
+
+      //create pointers to index 0 for each array
+      int aIndex = 0;
+      int bIndex = 0;
+      int smallestDifference = Math.MAX_VALUE;
+
+      while(aIndex <= a.length-1 && bIndex <= b.length-1){
+
+        int currDifference = Math.abs(a[aIndex] - b[bIndex]);
+        smallestDifference = currDifference < smallestDifference ? currDifference : smallestDifference;
+        if(smallestDifference == 0) break;
+
+        if(a[aIndex] > b[bIndex] || aIndex == a.length-1) {
+          bIndex++;
+        }
+        else if(a[aIndex] <= b[bIndex] || bIndex == b.length-1){
+          aIndex++;
+        }
+
+      }
+
+      return smallestDifference;
+    }
+
+
+    EXAMPLE:
+    [5 1 23 2 204 1]
+    [101 23 126 7 3]
+
+    [1 1 2 5 23 204]
+    [3 7 23 101 126]
+
+
+    aIndex = 0
+    bIndex = 0
+    currDifference = 2
+    smallestDifference = 2
+
+    aIndex++;
+
+    aIndex = 1, bIndex = 0, currDifference = 6, smallestDifference = 2
+    aIndex = 2, bIndex = 0, currDifference = 1, smallestDifference = 1
+    aIndex = 3, bIndex = 0, currDifference = 2
+    aIndex = 3, bIndex = 1, currDifference = 2,
+    aIndex = 4, bIndex = 1, currDifference = 16
+    aIndex = 4, bIndex = 2, currDifference = 0, smallestDifference = 0
+    aIndex = 5, bIndex = 2, currDifference =
+    aIndex = 5, bIndex = 3, currDifference = 103
+    aIndex = 5, bIndex = 4,
